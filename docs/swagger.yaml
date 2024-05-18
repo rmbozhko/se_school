@@ -1,0 +1,49 @@
+basePath: /api
+host: gses2.app:8080
+info:
+  contact: {}
+  title: GSES BTC application
+  version: 1.0.0
+paths:
+  /rate:
+    get:
+      description: Запит має повертати поточний курс USD до UAH використовуючи будь-який
+        third party сервіс з публічним АРІ
+      operationId: rate
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Повертається актуальний курс USD до UAH
+          schema:
+            type: number
+        "400":
+          description: Invalid status value
+      summary: Отримати поточний курс USD до UAH
+      tags:
+      - rate
+  /subscribe:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Запит має перевірити, чи немає данної електронної адреси в поточній
+        базі даних і, в разі її відсутності, записувати її.
+      operationId: subscribe
+      parameters:
+      - in: formData
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: E-mail додано
+        "409":
+          description: Повертати, якщо e-mail вже є в базі даних
+      summary: Підписати емейл на отримання поточного курсу
+      tags:
+      - subscription
+schemes:
+- http
+swagger: "2.0"
